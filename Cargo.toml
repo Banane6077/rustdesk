@@ -1,11 +1,11 @@
 [package]
-name = "rustdesk"
+name = "CD-Fernwartung"
 version = "1.2.4"
-authors = ["rustdesk <info@rustdesk.com>"]
+authors = ["EDV <support@colordruck.net>"]
 edition = "2021"
 build= "build.rs"
 description = "A remote control software."
-default-run = "rustdesk"
+default-run = "CD-Fernwartung"
 rust-version = "1.75"
 
 [lib]
@@ -57,6 +57,7 @@ lazy_static = "1.4"
 sha2 = "0.10"
 repng = "0.2"
 parity-tokio-ipc = { git = "https://github.com/rustdesk-org/parity-tokio-ipc" }
+runas = "=1.0" # https://github.com/mitsuhiko/rust-runas/issues/13
 magnum-opus = { git = "https://github.com/rustdesk-org/magnum-opus" }
 dasp = { version = "0.11", features = ["signal", "interpolate-linear", "interpolate"], optional = true }
 rubato = { version = "0.12", optional = true }
@@ -106,7 +107,6 @@ virtual_display = { path = "libs/virtual_display", optional = true }
 impersonate_system = { git = "https://github.com/21pages/impersonate-system" }
 shared_memory = "0.12"
 tauri-winrt-notification = "0.1.2"
-runas = "1.2"
 
 [target.'cfg(target_os = "macos")'.dependencies]
 objc = "0.2"
@@ -162,8 +162,9 @@ members = ["libs/scrap", "libs/hbb_common", "libs/enigo", "libs/clipboard", "lib
 exclude = ["vdi/host", "examples/custom_plugin"]
 
 [package.metadata.winres]
-LegalCopyright = "Copyright © 2024 Purslane, Inc."
-OriginalFilename = "rustdesk.exe"
+LegalCopyright = "Copyright © 2023 Purslane, Inc."
+# this FileDescription overrides package.description
+FileDescription = "RustDesk"
 
 [target.'cfg(target_os="windows")'.build-dependencies]
 winres = "0.1"
@@ -178,10 +179,12 @@ os-version = "0.2"
 hound = "3.5"
 
 [package.metadata.bundle]
-name = "RustDesk"
-identifier = "com.carriez.rustdesk"
+name = "CD-Fernwartung"
+identifier = "com.polarisworkforce.remote"
 icon = ["res/32x32.png", "res/128x128.png", "res/128x128@2x.png"]
+deb_depends = ["libgtk-3-0", "libxcb-randr0", "libxdo3", "libxfixes3", "libxcb-shape0", "libxcb-xfixes0", "libasound2", "libsystemd0", "pipewire", "curl", "libayatana-appindicator3-1", "libvdpau1", "libva2"]
 osx_minimum_system_version = "10.14"
+resources = ["res/mac-tray-light.png","res/mac-tray-dark.png"]
 
 #https://github.com/johnthagen/min-sized-rust
 [profile.release]
